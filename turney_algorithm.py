@@ -45,7 +45,7 @@ def find_pattern(postag):
 
 def near_operator(phrase, word, text):
     try:
-        string= word+r'\W+(?:\w+\W+){0,100}?'+phrase+r'|'+phrase+r'\W+(?:\w+\W+){01020}?'+word
+        string= word+r'\W+(?:\w+\W+){0,500}?'+phrase+r'|'+phrase+r'\W+(?:\w+\W+){500}?'+word
         freq_phrase_near_word=(len(re.findall(string,text)))
         return freq_phrase_near_word
     except:
@@ -83,7 +83,7 @@ class Turney(object):
                             self.neg_hits += txt_file.count("poor")
                                 
                 self.calculate_sentiment(boolean)
-        print("Točnost: ", ((self.accuracy/200)*100))
+        print("Accuracy: ", ((self.accuracy/200)*100))
             
     def calculate_sentiment(self, is_negative = 0):
         polarities = [0] * len(self.pos_phrases_hits)
