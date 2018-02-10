@@ -45,7 +45,7 @@ def find_pattern(postag):
 
 def near_operator(phrase, word, text):
     try:
-        string= word+r'\W+(?:\w+\W+){0,500}?'+phrase+r'|'+phrase+r'\W+(?:\w+\W+){500}?'+word
+        string= word+r'\W+(?:\w+\W+){0,500}?'+phrase+r'|'+phrase+r'\W+(?:\w+\W+){0,500}?'+word
         freq_phrase_near_word=(len(re.findall(string,text)))
         return freq_phrase_near_word
     except:
