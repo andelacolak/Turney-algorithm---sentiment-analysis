@@ -58,25 +58,39 @@ def near_operator(phrase, word, text):
 <p>Since there are many implementations of Turney's algorithm, but with external search, testing near operator has given some interesting results. When searched using a search engine, it is usual to search search for a phrase and a word at a maximum distance of 10. When we implemented such a near operator, the accuracy of the algorithm was slightly over 50%. These are the measurements:</p>
 <table>
   <tr>
-    <th>Udaljenost</th>
-    <th>Tocnost</th>
+    <th>Distance</th>
+    <th>Accuracy</th>
   </tr>
   <tr>
-    <td>maksimalno 10</td>
+    <td>max 10</td>
     <td>53%</td>
   </tr>
   <tr>
-    <td>maksimalno 25</td>
+    <td>max 25</td>
     <td>60%</td>
   </tr>
   <tr>
-    <td>maksimalno 50</td>
+    <td>max 50</td>
     <td>62%</td>
   </tr>
   <tr>
-    <td>maksimalno 250</td>
+    <td>max 250</td>
     <td>63%</td>
   </tr>
 </table>
 <p>
-We can notice that the accuracy increases with distance of the phrase and the corresponding word. Why is this happening? the number of files we search internally is far less than what we are searching through external search engines. So the search results are much more numerous. When we use a distance of up to 10, for most of the phrases we never find match, and they remain at a starting value of 0.01</p>
+We can notice that the accuracy increases with distance of the phrase and the corresponding word. Why is this happening? the number of files we search internally is far less than what we are searching through external search engines. So the search results are much more numerous. When we use a distance of up to 10, for most of the phrases we never find match, and they remain at a starting value of 0.01. Which means:</p>
+<pre>
+<code>
+num(phrase near "great") = num(phrase near "poor")<br>
+POLARITY(phrase)=log2(num(phrase near "great") * num("poor") / num(phrase near "poor") * num("great")) = num("poor") * num("great")
+</code>
+</pre>
+<p> 
+Since internal search does not match many phrases and words, the polarity is reduced to just the total number of words. Since the total number of words is the same for all phrases (searched in the same corpus), the algorithm lists all the phrases in the same category, negative or positive, depending on which number is greater. To solve this problem we had to extend the search. <br>
+The question is: <b>"Is the search still relevant?"</b>
+As we increased x (the phrase AROUND (x) word), there is a high chance of including words not coresponding phrase. However, the corpus we search by external search engines consists of data completely unrelated to the subject of our test corpus, so we have to insist on a relatively small x value.<br>
+In this project, all the data we search are closely related to the subject of our test corpus so we can sacrifice distance from words without the loss of meaning. We can easily search for the probability that a phrase appears in the same critique as the word "great" or "poor".<br>
+It would be ideal to search a large amount of relevant reviews (millions of data) to maximize the performance of the project. In the original version of the Turney algorithm applied to the same corpus, the accuracy of the algorithm is 66%, while in this project is 63%. We can conclude that we have not lose much of accuracy using an internal search engine. 
+For the future, it would be interesting to see larger internal corpses in order to evaluate their accuracy and determine whether this way can get more relevant results using Turney's algorithm.
+</p>
