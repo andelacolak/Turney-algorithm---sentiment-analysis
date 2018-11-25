@@ -1,7 +1,7 @@
 # Turney-algorithm wih internal search
-<p>Turney's algorithm with adaptation for the internal search of phrases beside the word. Reason for this kind of adaptation is that infinite number of search engine API queries are no longer available.</p>
+<p>Turney's algorithm with adaptation for the internal search of phrases near some word. Reason for this kind of adaptation is that infinite number of search engine API queries are no longer available.</p>
 <h2> Corpus</h2>
-<p>IMDB critics corpus has been used in this example. Corpus is divided into a training and testing set. The testing set consists of 100 positive and 100 negative critiques, while the training set consists of 1000 positive critiques and 1000 negative with including test critiques. The training is used as a database from which we extract occurrence frequency of certain phrases. The original idea of Turney's algorithm is to collect this data through an API (eg Google search) ie to collect data as how often a phrase usually appears next to the word. Since in the last few years, all search engines APIs limit the number of queries per day (they do not allow processing more than two files), it was necessary to implement own search engine version.</p>
+<p>IMDB critics corpus has been used in this example. Corpus is divided into a training and testing set. The testing set consists of 100 positive and 100 negative critiques, while the training set consists of 1000 positive critiques and 1000 negative including test critiques. The training is used as a database from which we extract occurrence frequency of certain phrases. The original idea of Turney's algorithm is to collect this data through an API (eg Google search) ie to collect data as how often a phrase usually appears next to the word. Since in the last few years, all search engines APIs limit the number of queries per day (they do not allow processing more than two files), it was necessary to implement own search engine version.</p>
 <pre>
 <code>
 def make_datasets(data_path, numfolds = 10):
@@ -55,7 +55,7 @@ def near_operator(phrase, word, text):
 </code>
 </pre>
 <h2>Evaluation</h2>
-<p>Since there are many implementations of Turney's algorithm, but with external search, testing near operator has given some interesting results. When searched using a search engine, it is usual to search search for a phrase and a word at a maximum distance of 10. When we implemented such a near operator, the accuracy of the algorithm was slightly over 50%. These are the measurements:</p>
+<p>Since there are many implementations of Turney's algorithm, but with external search, testing near operator has given some interesting results. When searched using a search engine, it is usual to search for a phrase and a word at a maximum distance of 10. When we implemented such a near operator, the accuracy of the algorithm was slightly over 50%. These are the measurements:</p>
 <table>
   <tr>
     <th>Distance</th>
@@ -91,6 +91,6 @@ Since internal search does not match many phrases and words, the polarity is red
 The question is: <b>"Is the search still relevant?"</b>
 As we increased x (the phrase AROUND (x) word), there is a high chance of including words not coresponding phrase. However, the corpus we search by external search engines consists of data completely unrelated to the subject of our test corpus, so we have to insist on a relatively small x value.<br>
 In this project, all the data we search are closely related to the subject of our test corpus so we can sacrifice distance from words without the loss of meaning. We can easily search for the probability that a phrase appears in the same critique as the word "great" or "poor".<br>
-It would be ideal to search a large amount of relevant reviews (millions of data) to maximize the performance of the project. In the original version of the Turney algorithm applied to the same corpus, the accuracy of the algorithm is 66%, while in this project is 63%. We can conclude that we have not lose much of accuracy using an internal search engine. 
-For the future, it would be interesting to see larger internal corpses in order to evaluate their accuracy and determine whether this way can get more relevant results using Turney's algorithm.
+It would be ideal to search a large amount of relevant reviews (millions of data) to maximize the performance of the project. In the original version of the Turney algorithm applied to the same corpus, the accuracy of the algorithm is 66%, while in this project is 63%. We can conclude that we have not lost much of accuracy using an internal search engine. 
+For the future, it would be interesting to see larger internal corpuses in order to evaluate their accuracy and determine whether this way can get more relevant results using Turney's algorithm.
 </p>
